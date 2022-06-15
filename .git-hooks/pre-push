@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# Setup: git config core.hooksPath .git-hooks
+
+# Run lint 
+printf "\e[33;1m%s\e[0m\n" 'Running gts lint and fix'
+npm run fix
+if [ $? -ne 0 ]; then
+  printf "\e[31;1m%s\e[0m\n" 'error found'
+  exit 1
+fi
+printf "\e[33;1m%s\e[0m\n" '...gts fix success'
