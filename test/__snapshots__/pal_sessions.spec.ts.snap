@@ -1,3 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`initialize Pal plugin get a session without initialize should throw: Pal has not been initialized 1`] = `"Pal has not been initialized"`;
+
+exports[`initialize Pal with session get a session without initialize should throw: Pal has not been initialized 1`] = `"Pal has not been initialized"`;

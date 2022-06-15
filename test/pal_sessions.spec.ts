@@ -5,7 +5,7 @@ import { LocalstorageService } from '../src/api/localstorage';
 import { PalSession, PlatformTypes } from '../src/api/models/session.model';
 import { SessionsApi } from '../src/api/sessions.api';
 
-describe('initialize Pal plugin', () => {
+describe('initialize Pal with session', () => {
 
     let pal: Pal;
 
@@ -51,5 +51,19 @@ describe('initialize Pal plugin', () => {
         expect(pal.getSession()).rejects.toThrowErrorMatchingSnapshot(
             'Pal has not been initialized'
         );
+    });
+
+    test('creates a session, call clear session => get session returns null', async () => {
+        const createSessionSpy = jest.spyOn(sessionsApi, 'createSession');
+        jest
+            .spyOn(httpClient, 'post')
+            .mockResolvedValue(Promise.resolve(<PalSession>{ uid: '8093283093' }));
+
+        // init session and clear session
+        await pal.initialize();
+        await pal.clearSession();
+
+        // session api has be called and session has been stored
+        expect(sessionsApi.getSession()).resolves.toBeNull();
     });
 });
