@@ -14,13 +14,12 @@
         "strict": true,
         "rootDir": ".",
         "outDir": "build",
-        "moduleResolution": "node",
         "lib": [
             "es2015",
             "es6",
             "dom"
         ],
-        "target": "es6",
+        "target": "es5",
     },
     "include": [
         "src/**/*.ts",
