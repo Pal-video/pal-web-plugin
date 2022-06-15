@@ -7,28 +7,49 @@ import { SessionsApi } from '../src/api/sessions.api';
 
 describe('initialize Pal plugin', () => {
 
+    let pal: Pal;
 
+    let httpClient: HttpClient;
 
-    test('creates a session', async () => {
+    let sessionsApi: SessionsApi;
+
+    beforeEach(() => {
         const options = <PalOptions>{
             apiKey: '',
             serverUrl: '',
             platform: PlatformTypes.web,
         };
-        const httpClient = new HttpClient({ baseUrl: '', apiKey: '' });
-        const sessionsApi = new SessionsApi(new LocalstorageService(), httpClient);
+        httpClient = new HttpClient({ baseUrl: '', apiKey: '' });
+        sessionsApi = new SessionsApi(new LocalstorageService(), httpClient);
+        pal = new Pal(sessionsApi, options);
+    });
+
+    beforeEach(() => {
+        localStorage.clear();
+        sessionStorage.clear();
+        jest.resetAllMocks();
+    });
+
+    test('creates a session', async () => {
         const createSessionSpy = jest.spyOn(sessionsApi, 'createSession');
         jest
             .spyOn(httpClient, 'post')
             .mockResolvedValue(Promise.resolve(<PalSession>{ uid: '8093283093' }));
-        // jest.spyOn(localStorage, 'getItem').mockReturnValue(null);
-        // jest.spyOn(sessionStorage, 'getItem').mockReturnValue(null);
 
-        // create pal and init session
-        const pal = new Pal(sessionsApi, options);
+        // init session
         await pal.initialize();
 
         // session api has be called and session has been stored
         expect(createSessionSpy).toHaveBeenCalled();
+        expect(sessionsApi.getSession()).resolves.toEqual(<PalSession>{ uid: '8093283093' });
+    });
+
+    test('get a session without initialize should throw', async () => {
+        const createSessionSpy = jest.spyOn(sessionsApi, 'createSession');
+
+        expect(createSessionSpy).toBeCalledTimes(0);
+        expect(pal.getSession()).rejects.toThrowErrorMatchingSnapshot(
+            'Pal has not been initialized'
+        );
     });
 });
