@@ -1,11 +1,12 @@
-import axios from 'axios';
 import eslint from '@rollup/plugin-eslint'
 import builtins from 'rollup-plugin-node-builtins';
 import globals from 'rollup-plugin-node-globals';
 import json from '@rollup/plugin-json';
+import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import { babel } from '@rollup/plugin-babel'
+import * as restClient from 'typed-rest-client/RestClient';
 
 const pkg = require('./package.json')
 
@@ -28,8 +29,10 @@ export default {
         }
     ],
     plugins: [
-        typescript({ tsconfig: './tsconfig.json' }),
-        eslint({ exclude: 'package.json' }),
+        commonjs(),
+        builtins(),
+        typescript({ tsconfig: './tsconfig.browser.json' }),
+        // eslint({ exclude: 'package.json' }),
         nodeResolve({
             jsnext: true,
             preferBuiltins: true,
@@ -37,9 +40,7 @@ export default {
         }),
         globals(),
         json(),
-        builtins(),
         babel({ exclude: 'node_modules/**', babelHelpers: 'bundled' }),
         // terser() // minify generated es bundle
-        // axios(),
     ]
 };
