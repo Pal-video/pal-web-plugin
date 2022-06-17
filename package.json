@@ -19,7 +19,7 @@
         "posttest": "npm run lint",
         "test": "jest",
         "test-watch": "jest --watchAll",
-        "compile-browser": "rollup -c rollup.config.js"
+        "compile-browser": "rollup -c rollup.config.js && cp src/sdk/style.css build/style.css"
     },
     "dependencies": {
         "typed-rest-client": "^1.8.9"
@@ -38,6 +38,7 @@
         "babel-preset-es2015": "^6.24.1",
         "gts": "^3.1.0",
         "jest": "^28.1.1",
+        "jest-environment-jsdom": "^28.1.1",
         "mock-local-storage": "^1.1.23",
         "rollup": "^2.75.6",
         "rollup-plugin-node-builtins": "^2.1.2",

@@ -3,6 +3,7 @@ const path = require('path');
 const app = express();
 
 const palPath = path.join(__dirname, '/node_modules/pal/build/src/pal.js');
+const palCssPath = path.join(__dirname, '/node_modules/pal/build/style.css');
 const indexPage = path.join(__dirname, 'index.html');
 
 app.listen(3000, async () => {
@@ -18,4 +19,8 @@ app.get('/', async (req, res) => {
 
 app.get('/pal.js', async (req, res) => {
     res.sendFile(palPath);
+});
+
+app.get('/pal.css', async (req, res) => {
+    res.sendFile(palCssPath);
 });

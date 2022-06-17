@@ -5,6 +5,7 @@ import { LocalstorageService } from '../src/api/localstorage';
 import { PalSession, PlatformTypes } from '../src/api/models/session.model';
 import { SessionsApi } from '../src/api/sessions.api';
 import { PalOptions } from '../src/options';
+import { PalSdk } from '../src/sdk/palsdk';
 
 describe('initialize Pal with session', () => {
     let pal: Pal;
@@ -21,7 +22,7 @@ describe('initialize Pal with session', () => {
         };
         httpClient = new HttpClient({ baseUrl: '', apiKey: '' });
         sessionsApi = new SessionsApi(new LocalstorageService(), httpClient);
-        pal = new Pal(sessionsApi, options);
+        pal = new Pal(sessionsApi, options, new PalSdk());
     });
 
     beforeEach(() => {

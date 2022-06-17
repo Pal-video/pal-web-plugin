@@ -1,0 +1,7 @@
+#PalVideoMiniature .content {
+    border-radius: 50%;
+    background-color: blueviolet;
+    position: absolute;
+    left: 100px;
+    bottom: 100px;
+}
