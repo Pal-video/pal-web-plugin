@@ -6,7 +6,10 @@ import {
     PalSessionRequest,
     PlatformTypes,
 } from './api/models/session.model';
+import { VideoTriggerEvent, VideoTriggerEvents } from './api/models/triggered_event.model';
+import { PalVideoTrigger } from './api/models/video_trigger.model';
 import { SessionsApi } from './api/sessions.api';
+import { PalTriggeredEventApi } from './api/triggered_event.api';
 import { PalOptions } from './options';
 import { PalSdk, ShowVideoOnlyParams } from './sdk/palsdk';
 
@@ -36,7 +39,14 @@ export class Pal {
         });
         const sessionsApi = new SessionsApi(new LocalstorageService(), httpClient);
         const eventsApi = new PalEventApi(httpClient);
-        this._instance = new Pal(sessionsApi, eventsApi, options, new PalSdk());
+        const triggeredEventApi = new PalTriggeredEventApi(httpClient);
+        this._instance = new Pal(
+            sessionsApi,
+            eventsApi,
+            options,
+            new PalSdk(),
+            triggeredEventApi
+        );
         return this._instance;
     }
 
@@ -45,6 +55,7 @@ export class Pal {
         private eventsApi: PalEventApi,
         options: PalOptions,
         palSdk: PalSdk,
+        private triggeredEventApi?: PalTriggeredEventApi,
     ) {
         this.options = options;
         this.palSdk = palSdk;
@@ -94,11 +105,23 @@ export class Pal {
                     userName: triggeredVideo.videoSpeakerName,
                     companyTitle: triggeredVideo.videoSpeakerRole,
                     avatarUrl: '',
-                    onExpand: () => { console.log("onExpand called"); },
-                    onClose: () => { console.log("onClose called"); },
-                    onVideoEnd: () => { console.log("onVideoEnd called"); },
+                    onExpand: () => this._sendTriggeredEvent(session, triggeredVideo, VideoTriggerEvents.minVideoOpen),
+                    onClose: () => this._sendTriggeredEvent(session, triggeredVideo, VideoTriggerEvents.videoSkip),
+                    onVideoEnd: () => this._sendTriggeredEvent(session, triggeredVideo, VideoTriggerEvents.videoViewed),
                 }
             );
         }
     }
+
+    private async _sendTriggeredEvent(session: PalSession, triggeredVideo: PalVideoTrigger, eventType: VideoTriggerEvents) {
+        this.triggeredEventApi?.save(
+            <VideoTriggerEvent>{
+                type: eventType,
+                time: new Date(), //FIXME use dayJS
+                sessionId: session.uid,
+            },
+            triggeredVideo.eventLogId
+        );
+    }
+
 }

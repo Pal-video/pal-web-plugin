@@ -24,29 +24,38 @@ export class HttpClient {
         this.httpClient.client.requestOptions = options;
     }
 
-    public get<T>(method: string): Promise<T> {
-        throw new Error('Method not implemented.');
-
+    public get<T>(method: string): Promise<T | null> {
+        return this.httpClient.get<T>(method).then(res => res.result);
     }
 
-    public post<T>(method: string, data: unknown): Promise<T> {
+    public post<T>(method: string, data: unknown): Promise<T | null> {
         return this.httpClient
             .create<T>(method, data)
             .then(res => {
-                if (!res.result) {
+                if (res.result && res.statusCode < 200 && res.statusCode >= 300) {
                     throw new Error(`
                         Pal returned an error:
                         url: ${this.baseUrl}${method}
-                        reason: No result in response: ${res.statusCode}
+                        reason: ${res.statusCode}
                     `);
                 }
                 return res.result;
             });
-        // throw new Error('Method not implemented.');
     }
 
-    public put<T>(method: string, data: unknown): Promise<T> {
-        throw new Error('Method not implemented.');
+    public put<T>(method: string, data: unknown): Promise<T | null> {
+        return this.httpClient
+            .update<T>(method, data)
+            .then(res => {
+                if (res.result && res.statusCode < 200 && res.statusCode >= 300) {
+                    throw new Error(`
+                        Pal returned an error:
+                        url: ${this.baseUrl}${method}
+                        reason: ${res.statusCode}
+                    `);
+                }
+                return res.result;
+            });
 
     }
 }
