@@ -1,8 +1,9 @@
+import { BaseComponent } from "../component";
 
 
 export const VIDEO_MINIATURE_HTML_ID = "PalVideoMiniature";
 
-export class PalVideoMiniature {
+export class PalVideoMiniature extends BaseComponent {
 
     private videoUrl: string;
 
@@ -10,13 +11,12 @@ export class PalVideoMiniature {
 
     private onTap: Function;
 
-    private layout?: HTMLDivElement | null;
-
     constructor(
         videoUrl: string,
         radius: number,
         onTap: Function,
     ) {
+        super();
         this.videoUrl = videoUrl;
         this.radius = radius;
         this.onTap = onTap;
@@ -33,32 +33,17 @@ export class PalVideoMiniature {
         this.body?.appendChild(this.layout);
     }
 
-    isVisible() {
-        return this.layout != null;
-    }
-
-    removeFromDom() {
-        if (!this.layout) {
-            return;
-        }
-        this.body.removeChild(this.layout);
-        this.layout = null;
-    }
-
-    private get body(): HTMLBodyElement {
-        return document.getElementsByTagName("body")[0];
-    }
-
     get html(): string {
         return `<div 
             class="content" 
             style="width: ${this.radius}px; height: ${this.radius}px;">
             <video 
                 src="${this.videoUrl}"
-                style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"
                 width="${this.radius}" height="${this.radius}" autoplay loop muted
             ></video>
         </div>
+        <div class="palAnimatedBg" style="width: ${this.radius}px; height: ${this.radius}px;"></div>
+        <div class="palAnimatedBg2" style="width: ${this.radius}px; height: ${this.radius}px;"></div>
         `;
     }
 }

@@ -1,3 +1,4 @@
+import { PalVideoExpanded } from "./components/expanded/video_expanded";
 import { PalVideoMiniature } from "./components/miniature/video_miniature";
 
 export interface ShowVideoOnlyParams {
@@ -57,10 +58,11 @@ export class PalSdk {
                 if (onExpand) {
                     onExpand();
                 }
-                this.showVideo({
+                this.showVideoExpanded({
                     videoUrl,
                     userName,
                     companyTitle,
+                    closeAfterVideoEnd: true,
                     onVideoEndAction: () => { },
                     onClose: () => { }
                 });
@@ -70,57 +72,26 @@ export class PalSdk {
 
     }
 
-    private async showVideo(
-        { videoUrl, userName, companyTitle, onVideoEndAction, onClose }: {
+    private async showVideoExpanded(
+        { videoUrl, userName, companyTitle, closeAfterVideoEnd, onVideoEndAction, onClose }: {
             videoUrl: string,
             userName: string,
             companyTitle: string,
+            closeAfterVideoEnd: boolean,
             onVideoEndAction: Function,
             onClose: Function,
         }
     ) {
-
+        const videoExpanded = new PalVideoExpanded(
+            userName,
+            companyTitle,
+            videoUrl,
+            onClose,
+            onVideoEndAction,
+            closeAfterVideoEnd
+        );
+        videoExpanded.appendToDom();
     }
-
-    // Future<void> showVideoAsset({
-    //     required BuildContext context,
-    //     required String videoAsset,
-    //     required String userName,
-    //     required String companyTitle,
-    //     required Function onVideoEndAction,
-    //     required bool animateOnVideoEnd,
-    //     Function? onClose,
-    //     Function? onExpand,
-    //     String? avatarUrl,
-    //     Widget? child,
-    //     Function? onSkip,
-    //   }) async {
-
-    // Future<void> showMiniatureVideoAsset({
-    //     required BuildContext context,
-    //     required String videoAsset,
-    //     required String userName,
-    //     required String companyTitle,
-    //     required Function onVideoEndAction,
-    //     required Function close,
-    //     required bool animateOnVideoEnd,
-    //     Function? onSkip,
-    //     String? avatarUrl,
-    //     Widget? child,
-    //   }) async {
-
-    // Future<void> showExpandedVideoAsset({
-    //     required BuildContext context,
-    //     required String videoAsset,
-    //     required String userName,
-    //     required String companyTitle,
-    //     required Function onVideoEndAction,
-    //     required Function close,
-    //     required bool animateOnVideoEnd,
-    //     Function? onSkip,
-    //     String? avatarUrl,
-    //     Widget? child,
-    //   }) async {
 
 
 }

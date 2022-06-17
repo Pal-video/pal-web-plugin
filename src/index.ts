@@ -81,8 +81,8 @@ export class Pal {
             <ShowVideoOnlyParams>{
                 videoUrl: 'https://res.cloudinary.com/apparence/video/upload/v1654593742/Pal/dev/projects/0fe00730-79db-44d5-863d-9139974abaf6/videos/e712616e-292c-45a3-b80e-e8c92ee55c7c.mp4',
                 minVideoUrl: 'https://res.cloudinary.com/apparence/video/upload/v1654593742/Pal/dev/projects/0fe00730-79db-44d5-863d-9139974abaf6/videos/e712616e-292c-45a3-b80e-e8c92ee55c7c.mp4',
-                userName: '',
-                companyTitle: '',
+                userName: 'John Doe',
+                companyTitle: 'CEO',
                 avatarUrl: '',
                 onExpand: () => { console.log("onExpand called"); },
                 onClose: () => { console.log("onClose called"); },

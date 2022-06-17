@@ -1,4 +1,5 @@
 import 'jest';
+import { VIDEO_EXPANDED_HTML_ID } from '../../src/sdk/components/expanded/video_expanded';
 import { PalVideoMiniature, VIDEO_MINIATURE_HTML_ID } from '../../src/sdk/components/miniature/video_miniature';
 import { PalSdk, ShowVideoOnlyParams } from '../../src/sdk/palsdk';
 
@@ -23,6 +24,7 @@ describe('Video only', () => {
 
         videoMiniature!.click();
         expect(document.getElementById(VIDEO_MINIATURE_HTML_ID)).toBeFalsy();
+        expect(document.getElementById(VIDEO_EXPANDED_HTML_ID)).toBeTruthy();
     });
 
 
