@@ -14,7 +14,7 @@ export class SessionsApi {
             platform: request.platform,
         });
         if (response) {
-            this.localstorageService.setSession(response);
+            this.localstorageService.setSession(response, true);
             return response;
         }
         throw new Error("Pal: Could not create session");
