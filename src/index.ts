@@ -86,6 +86,7 @@ export class Pal {
         }
         const triggeredVideo = await this.eventsApi.logCurrentScreen(session, name);
         if (triggeredVideo) {
+            // console.log('triggeredVideo', triggeredVideo.videoUrl);
             this.palSdk.showVideoOnly(
                 <ShowVideoOnlyParams>{
                     videoUrl: triggeredVideo.videoUrl,

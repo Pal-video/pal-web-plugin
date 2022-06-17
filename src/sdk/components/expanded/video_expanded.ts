@@ -66,7 +66,6 @@ export class PalVideoExpanded extends BaseComponent {
             <video 
                 id="${VIDEO_ID}"
                 src="${this.videoUrl}"
-                autoplay
             ></video>
             <div class="author">
                 <div class="name">${this.userName}</div>
