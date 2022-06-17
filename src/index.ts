@@ -1,3 +1,4 @@
+import { PalEventApi } from './api/event.api';
 import { HttpClient } from './api/httpclient';
 import { LocalstorageService } from './api/localstorage';
 import {
@@ -34,12 +35,14 @@ export class Pal {
             apiKey: options.apiKey,
         });
         const sessionsApi = new SessionsApi(new LocalstorageService(), httpClient);
-        this._instance = new Pal(sessionsApi, options, new PalSdk());
+        const eventsApi = new PalEventApi(httpClient);
+        this._instance = new Pal(sessionsApi, eventsApi, options, new PalSdk());
         return this._instance;
     }
 
     constructor(
         private sessionsApi: SessionsApi,
+        private eventsApi: PalEventApi,
         options: PalOptions,
         palSdk: PalSdk,
     ) {
@@ -77,17 +80,24 @@ export class Pal {
      * Or each time this screen is visited
      */
     async logCurrentScreen(name: string) {
-        this.palSdk.showVideoOnly(
-            <ShowVideoOnlyParams>{
-                videoUrl: 'https://res.cloudinary.com/apparence/video/upload/v1654593742/Pal/dev/projects/0fe00730-79db-44d5-863d-9139974abaf6/videos/e712616e-292c-45a3-b80e-e8c92ee55c7c.mp4',
-                minVideoUrl: 'https://res.cloudinary.com/apparence/video/upload/v1654593742/Pal/dev/projects/0fe00730-79db-44d5-863d-9139974abaf6/videos/e712616e-292c-45a3-b80e-e8c92ee55c7c.mp4',
-                userName: 'John Doe',
-                companyTitle: 'CEO',
-                avatarUrl: '',
-                onExpand: () => { console.log("onExpand called"); },
-                onClose: () => { console.log("onClose called"); },
-                onVideoEnd: () => { console.log("onVideoEnd called"); },
-            }
-        );
+        const session = await this.getSession();
+        if (!session) {
+            throw new Error('Pal has not been initialized');
+        }
+        const triggeredVideo = await this.eventsApi.logCurrentScreen(session, name);
+        if (triggeredVideo) {
+            this.palSdk.showVideoOnly(
+                <ShowVideoOnlyParams>{
+                    videoUrl: triggeredVideo.videoUrl,
+                    minVideoUrl: triggeredVideo.videoThumbUrl,
+                    userName: triggeredVideo.videoSpeakerName,
+                    companyTitle: triggeredVideo.videoSpeakerRole,
+                    avatarUrl: '',
+                    onExpand: () => { console.log("onExpand called"); },
+                    onClose: () => { console.log("onClose called"); },
+                    onVideoEnd: () => { console.log("onVideoEnd called"); },
+                }
+            );
+        }
     }
 }

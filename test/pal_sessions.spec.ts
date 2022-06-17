@@ -1,5 +1,6 @@
 import 'jest';
 import { Pal } from '../src';
+import { PalEventApi } from '../src/api/event.api';
 import { HttpClient } from '../src/api/httpclient';
 import { LocalstorageService } from '../src/api/localstorage';
 import { PalSession, PlatformTypes } from '../src/api/models/session.model';
@@ -22,7 +23,8 @@ describe('initialize Pal with session', () => {
         };
         httpClient = new HttpClient({ baseUrl: '', apiKey: '' });
         sessionsApi = new SessionsApi(new LocalstorageService(), httpClient);
-        pal = new Pal(sessionsApi, options, new PalSdk());
+        const eventsApi = new PalEventApi(httpClient);
+        pal = new Pal(sessionsApi, eventsApi, options, new PalSdk());
     });
 
     beforeEach(() => {
