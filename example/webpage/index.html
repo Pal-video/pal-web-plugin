@@ -9,9 +9,6 @@
 
   <script src="http://localhost:3000/pal.js" type="text/javascript"></script> 
   <link rel="stylesheet" href="http://localhost:3000/pal.css" type="text/css" />
-    <!-- <script nomodule crossorigin="anonymous" src="./node_modules/pal/build/pal.min.js" type="text/javascript"></script> -->
-    <!-- <script nomodule crossorigin="anonymous" src="./pal.js" type="text/javascript"></script> -->
-    
 </head>
 <body>
     <div class="container">
@@ -24,11 +21,8 @@
         apiKey: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsInVwbiI6IjFiMzNjZGI0LWQ2NDEtNGE2MS04NGE0LTk3ZjZlZjdiY2EyOUBwYWwuaW8iLCJzdWIiOiIxYjMzY2RiNC1kNjQxLTRhNjEtODRhNC05N2Y2ZWY3YmNhMjkiLCJpYXQiOjE2NTQ4ODk2NTgsImdyb3VwcyI6WyJQcm9qZWN0Il0sImVudiI6IlBST0RVQ1RJT04iLCJleHAiOjEwMjk0ODg5NjU4LCJqdGkiOiIyMzgxMzJiZC0wMTllLTQ4YjYtYmMyNy0zZWU5YjY5NDIzMmIifQ.gIvhyZyw9-XTHN_S_rZ8fqtatjLXpZ7cIPRTcvGP3bGlHBG4lXN_dAZ-xoEbV9vEawpYzusRn8bPlJ_Ksjos2loJC6GWRnFHw76heg3qMUsurywXtEcDQc1_27pNfWi2R7s7xgazFUILiZJ1DqzNZw5NUAn_a4d7AT2L49ambiLG2et2Yum2gWYJbVLNY140f8I99XLmP8tWLissFU5ucRgKw7DuZteEg521KoVSI0AeW2hPEn3KMOHMqtZqPje-SV_yGytzUcflEMEFThLg97Uz4GBLTOhRb6byu60Wbw12CcVbtoG6UuHR5J1oFGCxqDX0k9Qf45g6oVTb9DFIjw'
     });
     pal.initialize().then(() => {
-        pal.getSession().then((session) => {
-            console.log(session);
-        });
-        pal.logCurrentScreen("/");
+        console.log("Pal initialized");
+        pal.logCurrentScreen(location.pathname);
     });
-   
 </script>
 </html>
