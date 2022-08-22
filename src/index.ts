@@ -62,11 +62,18 @@ export class Pal {
     }
 
     async initialize(): Promise<void> {
-        await this.sessionsApi.createSession(<PalSessionRequest>{
-            frameworkType: 'JAVASCRIPT',
-            platform: this.options.platform ?? PlatformTypes.web,
-        });
-        this.hasInitialized = true;
+        if (this.hasInitialized) {
+            return;
+        }
+        try {
+            await this.sessionsApi.createSession(<PalSessionRequest>{
+                frameworkType: 'JAVASCRIPT',
+                platform: this.options.platform ?? PlatformTypes.web,
+            });
+            this.hasInitialized = true;
+        } catch (err) {
+            console.error("cannot initialize Pal plugin", err);
+        }
     }
 
     async getSession(): Promise<PalSession | null> {

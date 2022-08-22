@@ -5,9 +5,10 @@ const app = express();
 const palPath = path.join(__dirname, '/node_modules/pal/build/src/pal.js');
 const palCssPath = path.join(__dirname, '/node_modules/pal/build/style.css');
 const indexPage = path.join(__dirname, 'index.html');
+const indexCss = path.join(__dirname, 'app.css');
 
 app.listen(3000, async () => {
-    console.log('Application started and Listening on port 3000');
+    console.log('Application started and Listening on port 3000:');
 });
 
 // serve your css as static
@@ -23,4 +24,8 @@ app.get('/pal.js', async (req, res) => {
 
 app.get('/pal.css', async (req, res) => {
     res.sendFile(palCssPath);
+});
+
+app.get('/app.css', async (req, res) => {
+    res.sendFile(indexCss);
 });

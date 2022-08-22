@@ -1,3 +1,4 @@
+import { PalBrand } from "../branding/pal_brand";
 import { BaseComponent } from "../component";
 
 export const VIDEO_EXPANDED_HTML_ID = "PalVideoExpanded";
@@ -70,7 +71,8 @@ export class PalVideoExpanded extends BaseComponent {
             <div class="author">
                 <div class="name">${this.userName}</div>
                 <div class="role">${this.userCompanyTitle}</div>
-            <div>
+            </div>
+            ${new PalBrand().html}
         </div>
         `;
     }

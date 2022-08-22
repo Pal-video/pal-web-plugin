@@ -22,6 +22,7 @@ export class HttpClient {
             }
         };
         this.httpClient.client.requestOptions = options;
+        console.log("[Pal] configured on client " + this.baseUrl)
     }
 
     public get<T>(method: string): Promise<T | null> {
