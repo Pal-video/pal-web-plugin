@@ -9,5 +9,6 @@ export interface VideoTriggerEvent {
     type: VideoTriggerEvents;
     time: Date;
     sessionId: string;
-    args?: Map<String, unknown>;
+    args?: any;
+    // args?: { [code: string]: string };
 }

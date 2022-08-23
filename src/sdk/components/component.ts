@@ -26,3 +26,10 @@ export abstract class BaseComponent {
 
     abstract appendToDom(): void;
 }
+
+export abstract class Component {
+
+    constructor() { }
+
+    abstract get html(): string;
+}

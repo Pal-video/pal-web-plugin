@@ -1,3 +1,5 @@
+import { Survey } from "./survey.model";
+
 export interface PalVideoTrigger {
     eventLogId?: string;
     videoId: string;
@@ -10,5 +12,5 @@ export interface PalVideoTrigger {
     // PalVideos type;
     videoSpeakerName: string;
     videoSpeakerRole: string;
-    //Survey? survey;
+    survey?: Survey;
 }

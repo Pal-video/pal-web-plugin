@@ -1,4 +1,4 @@
-import eslint from '@rollup/plugin-eslint'
+// import eslint from '@rollup/plugin-eslint'
 import builtins from 'rollup-plugin-node-builtins';
 import globals from 'rollup-plugin-node-globals';
 import json from '@rollup/plugin-json';
@@ -6,7 +6,8 @@ import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import { babel } from '@rollup/plugin-babel'
-import * as restClient from 'typed-rest-client/RestClient';
+// import { terser } from "rollup-plugin-terser";
+// import * as restClient from 'typed-rest-client/RestClient';
 
 const pkg = require('./package.json')
 

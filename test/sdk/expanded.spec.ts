@@ -1,4 +1,5 @@
 import 'jest';
+import { AuthorCard } from '../../src/sdk/components/expanded/author_card';
 import { PalVideoExpanded, VIDEO_EXPANDED_HTML_ID, VIDEO_SKIP_BTN_HTML_CLASS } from '../../src/sdk/components/expanded/video_expanded';
 
 
@@ -8,12 +9,11 @@ describe('Create a video expanded with a correct video url', () => {
 
     beforeEach(() => {
         component = new PalVideoExpanded(
-            'John Doe',
-            'John Doe Company',
             'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
             () => { },
             () => { },
             true,
+            new AuthorCard('John Doe', 'John Doe Company'),
         );
     });
 
