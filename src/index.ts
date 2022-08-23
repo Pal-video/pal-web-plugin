@@ -93,7 +93,7 @@ export class Pal {
         if (!this.hasInitialized) {
             throw new Error('Pal has not been initialized');
         }
-        await this.sessionsApi.clearSession();
+        this.sessionsApi.clearSession();
     }
 
     /**
