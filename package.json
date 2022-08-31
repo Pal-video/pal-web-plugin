@@ -1,13 +1,22 @@
 {
-    "name": "pal",
-    "version": "1.0.0",
-    "description": "Your in-app friend",
+    "name": "pal.video",
+    "version": "0.0.1",
+    "description": "Your in-app friend.",
     "main": "build/src/pal.js",
     "cdn": "build/pal.min.js",
     "module": "build/src/index.es.js",
     "types": "build/src/index.d.ts",
     "files": [
         "/build"
+    ],
+    "author": {
+        "name": "Pal team",
+        "web": "https://pal.video"
+    },
+    "keywords": [
+        "pal",
+        "feedbacks",
+        "video"
     ],
     "scripts": {
         "lint": "gts lint",

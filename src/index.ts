@@ -11,7 +11,7 @@ import { VideoTriggerEvent, VideoTriggerEvents } from './api/models/triggered_ev
 import { PalVideoTrigger } from './api/models/video_trigger.model';
 import { SessionsApi } from './api/sessions.api';
 import { PalTriggeredEventApi } from './api/triggered_event.api';
-import { PalOptions } from './options';
+import { PalOptions, PRODUCTION_SERVER_URL } from './options';
 import { PalSdk, ShowSurveyParams, ShowVideoOnlyParams } from './sdk/palsdk';
 
 export class Pal {
@@ -35,7 +35,7 @@ export class Pal {
 
     static createInstance(options: PalOptions): Pal {
         const httpClient = new HttpClient({
-            baseUrl: options.serverUrl,
+            baseUrl: options.serverUrl ?? PRODUCTION_SERVER_URL,
             apiKey: options.apiKey,
         });
         const sessionsApi = new SessionsApi(new LocalstorageService(), httpClient);

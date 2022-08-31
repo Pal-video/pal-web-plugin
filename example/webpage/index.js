@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-const palPath = path.join(__dirname, '/node_modules/pal/build/src/pal.js');
+const palPath = path.join(__dirname, '/node_modules/pal/build/pal.min.js');
 const palCssPath = path.join(__dirname, '/node_modules/pal/build/style.css');
 const indexPage = path.join(__dirname, 'index.html');
 const indexCss = path.join(__dirname, 'app.css');
