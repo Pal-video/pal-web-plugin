@@ -8,11 +8,8 @@
   <title>Pal example</title>
 
   <!-- JSDELIVR VERSION   -->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/pal.video/build/pal.min.js" type="text/javascript"></script> -->
-  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pal.video/build/style.css" type="text/css" /> -->
-  <!-- LOCAL VERSION   -->
-  <script src="http://localhost:3000/pal.js" type="text/javascript"></script> 
-  <link rel="stylesheet" href="http://localhost:3000/pal.css" type="text/css" />
+  <script src="https://cdn.jsdelivr.net/npm/pal.video/build/pal.min.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pal.video/build/style.css" type="text/css" />
 </head>
 <body>
     <div class="container">
@@ -29,7 +26,9 @@
         apiKey: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsInVwbiI6IjQxOWJjMGVjLTFkZjgtNDQyNS1iN2MwLWI5ZDA5NGYyNDM0OEBwYWwuaW8iLCJzdWIiOiI0MTliYzBlYy0xZGY4LTQ0MjUtYjdjMC1iOWQwOTRmMjQzNDgiLCJpYXQiOjE2NjExNzM5MTUsImdyb3VwcyI6WyJQcm9qZWN0Il0sImVudiI6IlBST0RVQ1RJT04iLCJleHAiOjEwMzAxMTczOTE1LCJqdGkiOiI0ZWUwZDUyNS1jMmI3LTRmYzUtYTFkNS1hZjBhOGEwMjE0NWYifQ.Fm0PEX0k4xxalhld-WmdlBeOOzjN49a-2j58GgVw7n6gqAokfLIQZdJLIqh_U9WQo1yw-52i70lXlSBu-g8r9hwjtjod0iI_UpWlYh73CgERUfXeqOZCGYmlyOiYlZa9ChuWbuTktezUsHmhlVJ0SQXEpbal38vrrf37q2W96Tz6sTkbVBldo1yJKvbMEV8earpKq6tRPEJVR2dDv6lKobtyizRCPpPJN7PYvMJNQr0QLsPd1289c3nWTPL_5dZovVglbMJpDdKEmIxw0nDeJgAu6T9am73HRfZ7YLRZP7G-1e5RvFXd9V1J9FUDuf6VxiJPqGKCnGnAkdx6XOfR8w'
     });
     pal.initialize().then(() => {
-        pal.logCurrentScreen(location.pathname);
+        console.log("current page: " + location.pathname);
+        pal.logCurrentScreen("/");
+        // pal.logCurrentScreen(location.pathname);
     });
 </script>
 </html>

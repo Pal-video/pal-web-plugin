@@ -1,13 +1,15 @@
 {
     "name": "pal.video",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Your in-app friend.",
     "main": "build/src/pal.js",
     "cdn": "build/pal.min.js",
     "module": "build/src/index.es.js",
     "types": "build/src/index.d.ts",
     "files": [
-        "/build"
+        "/build/src",
+        "/build/pal.min.js",
+        "/build/style.css"
     ],
     "author": {
         "name": "Pal team",
@@ -21,14 +23,14 @@
     "scripts": {
         "lint": "gts lint",
         "clean": "gts clean",
-        "compile": "npm run clean && tsc --project tsconfig.json",
+        "compile": "rollup -c rollup.config.js && cp src/sdk/style.css build/style.css",
+        "compile-ts": "npm run clean && tsc --project tsconfig.json",
         "fix": "gts fix",
         "prepare": "npm run compile",
         "pretest": "npm run compile",
         "posttest": "npm run lint",
         "test": "jest",
-        "test-watch": "jest --watchAll",
-        "compile-browser": "rollup -c rollup.config.js && cp src/sdk/style.css build/style.css"
+        "test-watch": "jest --watchAll"
     },
     "dependencies": {
         "typed-rest-client": "^1.8.9"

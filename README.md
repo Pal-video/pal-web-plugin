@@ -1,3 +1,5 @@
+[![](https://data.jsdelivr.com/v1/package/npm/pal.video/badge)](https://www.jsdelivr.com/package/npm/pal.video)
+
 # Pal | typescript plugin
 *coming soon*
 
