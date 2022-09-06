@@ -108,48 +108,53 @@ export class Pal {
         if (!session) {
             throw new Error('Pal has not been initialized');
         }
-        const triggeredVideo = await this.eventsApi.logCurrentScreen(session, name);
-        if (!triggeredVideo) {
-            return;
-        }
-        let isSurveyType = triggeredVideo.survey != null;
-        let isTalkType = triggeredVideo.survey == null;
-        // console.log('triggeredVideo', triggeredVideo.videoUrl);
-        if (isTalkType) {
-            this.palSdk.showVideoOnly(
-                <ShowVideoOnlyParams>{
-                    videoUrl: triggeredVideo.videoUrl,
-                    minVideoUrl: triggeredVideo.videoThumbUrl,
-                    userName: triggeredVideo.videoSpeakerName,
-                    companyTitle: triggeredVideo.videoSpeakerRole,
-                    onExpand: () => this._sendTriggeredEvent(session, triggeredVideo, VideoTriggerEvents.minVideoOpen),
-                    onClose: () => this._sendTriggeredEvent(session, triggeredVideo, VideoTriggerEvents.videoSkip),
-                    onVideoEnd: () => this._sendTriggeredEvent(session, triggeredVideo, VideoTriggerEvents.videoViewed),
-                }
-            );
-        } else if (isSurveyType) {
-            const options: ChoiceItem[] = [];
-            const keys = Object.keys(triggeredVideo.survey!.options);
-            for (let i = 0; i < keys.length; i++) {
-                options.push(<ChoiceItem>{
-                    code: keys[i],
-                    text: triggeredVideo.survey!.options[keys[i]],
-                });
+        try {
+            const triggeredVideo = await this.eventsApi.logCurrentScreen(session, name);
+            if (!triggeredVideo) {
+                return;
             }
-            this.palSdk.showSingleChoiceSurvey(
-                <ShowSurveyParams>{
-                    videoUrl: triggeredVideo.videoUrl,
-                    minVideoUrl: triggeredVideo.videoThumbUrl,
-                    userName: triggeredVideo.videoSpeakerName,
-                    companyTitle: triggeredVideo.videoSpeakerRole,
-                    question: triggeredVideo.survey!.question,
-                    choices: options,
-                    onTapChoice: (choice) => this.triggeredEventApi?.saveSurveyAnswer(session, triggeredVideo, choice),
-                    onExpand: () => this._sendTriggeredEvent(session, triggeredVideo, VideoTriggerEvents.minVideoOpen),
-                    onClose: () => this._sendTriggeredEvent(session, triggeredVideo, VideoTriggerEvents.videoSkip),
-                    onVideoEnd: () => this._sendTriggeredEvent(session, triggeredVideo, VideoTriggerEvents.videoViewed),
+            let isSurveyType = triggeredVideo.survey != null;
+            let isTalkType = triggeredVideo.survey == null;
+            // console.log('triggeredVideo', triggeredVideo.videoUrl);
+            if (isTalkType) {
+                this.palSdk.showVideoOnly(
+                    <ShowVideoOnlyParams>{
+                        videoUrl: triggeredVideo.videoUrl,
+                        minVideoUrl: triggeredVideo.videoThumbUrl,
+                        userName: triggeredVideo.videoSpeakerName,
+                        companyTitle: triggeredVideo.videoSpeakerRole,
+                        onExpand: () => this._sendTriggeredEvent(session, triggeredVideo, VideoTriggerEvents.minVideoOpen),
+                        onClose: () => this._sendTriggeredEvent(session, triggeredVideo, VideoTriggerEvents.videoSkip),
+                        onVideoEnd: () => this._sendTriggeredEvent(session, triggeredVideo, VideoTriggerEvents.videoViewed),
+                    }
+                );
+            } else if (isSurveyType) {
+                const options: ChoiceItem[] = [];
+                const keys = Object.keys(triggeredVideo.survey!.options);
+                for (let i = 0; i < keys.length; i++) {
+                    options.push(<ChoiceItem>{
+                        code: keys[i],
+                        text: triggeredVideo.survey!.options[keys[i]],
+                    });
                 }
-            );
+                this.palSdk.showSingleChoiceSurvey(
+                    <ShowSurveyParams>{
+                        videoUrl: triggeredVideo.videoUrl,
+                        minVideoUrl: triggeredVideo.videoThumbUrl,
+                        userName: triggeredVideo.videoSpeakerName,
+                        companyTitle: triggeredVideo.videoSpeakerRole,
+                        question: triggeredVideo.survey!.question,
+                        choices: options,
+                        onTapChoice: (choice) => this.triggeredEventApi?.saveSurveyAnswer(session, triggeredVideo, choice),
+                        onExpand: () => this._sendTriggeredEvent(session, triggeredVideo, VideoTriggerEvents.minVideoOpen),
+                        onClose: () => this._sendTriggeredEvent(session, triggeredVideo, VideoTriggerEvents.videoSkip),
+                        onVideoEnd: () => this._sendTriggeredEvent(session, triggeredVideo, VideoTriggerEvents.videoViewed),
+                    }
+                );
+            }
+        } catch (err) {
+            console.error("logCurrentScreen");
+            console.error(err);
         }
     }
 

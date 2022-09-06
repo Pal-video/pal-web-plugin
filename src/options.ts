@@ -6,4 +6,4 @@ export interface PalOptions {
     platform?: PlatformTypes;
 }
 
-export const PRODUCTION_SERVER_URL = "https://pal-server-prod.cleverapps.io";
+export const PRODUCTION_SERVER_URL = "https://back.pal.video";

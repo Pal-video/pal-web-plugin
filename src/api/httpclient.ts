@@ -1,62 +1,85 @@
-import * as rm from 'typed-rest-client/RestClient';
-
 export class HttpClient {
 
     private baseUrl: string;
 
     private apiKey: string;
 
-    private httpClient: rm.RestClient;
-
     constructor({ baseUrl, apiKey }: { baseUrl: string; apiKey: string }) {
         this.baseUrl = baseUrl;
         this.apiKey = apiKey;
-        this.httpClient = new rm.RestClient(
-            'pal',
-            this.baseUrl,
-        );
-        let options = {
-            maxSockets: 1,
-            headers: {
-                'Authorization': `Bearer ${this.apiKey}`,
-            }
-        };
-        this.httpClient.client.requestOptions = options;
         console.log("[Pal] configured on client " + this.baseUrl)
     }
 
-    public get<T>(method: string): Promise<T | null> {
-        return this.httpClient.get<T>(method).then(res => res.result);
+    public async get<T>(method: string): Promise<T | null> {
+        const _headers = this.headers;
+        let options = <RequestInit>{
+            method: 'GET',
+            headers: _headers,
+        };
+        const response = await fetch(this.buildUrl(method), options);
+        await this.handleError(method, response);
+
+        return response.json();
     }
 
-    public post<T>(method: string, data: unknown): Promise<T | null> {
-        return this.httpClient
-            .create<T>(method, data)
-            .then(res => {
-                if (res.result && res.statusCode < 200 && res.statusCode >= 300) {
-                    throw new Error(`
-                        Pal returned an error:
-                        url: ${this.baseUrl}${method}
-                        reason: ${res.statusCode}
-                    `);
-                }
-                return res.result;
-            });
+    public async post<T>(method: string, data: unknown): Promise<T | null> {
+        const jsonData = JSON.stringify(data);
+        const _headers = this.headers;
+        _headers.append('Content-length', jsonData.length.toString());
+
+        let options = <RequestInit>{
+            method: 'POST',
+            headers: _headers,
+            body: jsonData,
+        };
+
+        const response = await fetch(this.buildUrl(method), options);
+        await this.handleError(method, response);
+
+        return response.json();
     }
 
-    public put<T>(method: string, data: unknown): Promise<T | null> {
-        return this.httpClient
-            .update<T>(method, data)
-            .then(res => {
-                if (res.result && res.statusCode < 200 && res.statusCode >= 300) {
-                    throw new Error(`
-                        Pal returned an error:
-                        url: ${this.baseUrl}${method}
-                        reason: ${res.statusCode}
-                    `);
-                }
-                return res.result;
-            });
+    public async put<T>(method: string, data: unknown): Promise<T | null> {
+        const jsonData = JSON.stringify(data);
+        const _headers = this.headers;
+        _headers.append('Content-length', jsonData.length.toString());
 
+        let options = <RequestInit>{
+            method: 'PUT',
+            headers: _headers,
+            body: jsonData,
+        };
+
+        const response = await fetch(this.buildUrl(method), options);
+        await this.handleError(method, response);
+
+        return response.json();
+    }
+
+    //////////////
+
+    private buildUrl(method: string): string {
+        return `${this.baseUrl}${method}`;
+    }
+
+    private get headers(): Headers {
+        let headers = new Headers();
+        headers.append('Authorization', `Bearer ${this.apiKey}`);
+        headers.append("Content-Type", "application/json");
+
+        return headers;
+    }
+
+    private async handleError(method: string, response: Response) {
+        if (response && (response.status < 200 || response.status >= 300)) {
+            throw new Error(`Pal http call failed 
+                -----------------------------------
+                url: ${this.baseUrl}${method}
+                reason: ${response.status},
+                description: ${response.statusText},
+                error: ${await response.text()}
+                -----------------------------------
+            `.replace(/  +/g, ''));
+        }
     }
 }
