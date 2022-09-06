@@ -1,7 +1,7 @@
 export class PalBrand {
 
     get html(): string {
-        return `<div class="pal-brand" height="15px">Powered by <img src="${this.img64}"/></div>`;
+        return `<a href="https://pal.video" traget="_blank" /><div class="pal-brand" height="15px">Powered by <img src="${this.img64}" alt="pal logo" /></div></a>`;
     }
 
     get img64(): string {
