@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Nunito");
+
 #PalVideoMiniature .palAnimatedBg {
     position: absolute;
     left: 100px;
@@ -31,12 +33,13 @@
 
     animation: fadeAndScaleIn .5s;
     animation-timing-function: linear;
+    transition-duration: 300ms;
+    cursor: pointer;
+
 }
 
 #PalVideoMiniature .content:hover {
-    cursor: pointer;
     transform: scale(1.05);
-    transition-duration: 300ms;
 }
 
 #PalVideoMiniature video {
@@ -58,16 +61,19 @@
     color: white;
     padding: 12px;
     text-align: center;
-    width: 100%;
     border-radius: 0 0 16px 16px;
     font-size: 16px;
     font-weight: 100;
     z-index: 101;
+    font-family: 'Nunito';
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .pal-brand img {
     height: 16px;
-    margin-left: 4px;
+    margin-left: 5px;
 }
 
 /* --------------------------------------- */
@@ -100,6 +106,7 @@
 }
 
 #PalVideoExpanded .author {
+    font-family: 'Nunito';
     position: absolute;
     bottom: 70px;
     left: 16px;
@@ -169,6 +176,10 @@
     color: white;
     font-size: 24px;
     font-weight: bold;
+    font-family: 'Nunito';
+
+    max-height: 260px;
+    overflow-y: scroll;
 
     animation-delay: 500ms;
     animation: fadeIn .4s;
@@ -183,16 +194,22 @@
 }
 
 .pal-form .choices .choice {
+    cursor: pointer;
     padding: 16px 24px;
     color: #0F0F0F;
     font-size: 18px;
     margin-bottom: 16px;
     background-color: white;
     border-radius: 8px;
+    transition: all 0.3s ease;
+    font-family: 'Nunito';
+
+    overflow: scroll;
+    max-height: 90px;
+    word-break: break-word;
 }
 
 .pal-form .choices .choice:hover {
-    cursor: pointer;
     background-color: #60E78D;
 }
 
