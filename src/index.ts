@@ -124,7 +124,7 @@ export class Pal {
                         userName: triggeredVideo.videoSpeakerName,
                         companyTitle: triggeredVideo.videoSpeakerRole,
                         onExpand: () => this._sendTriggeredEvent(session, triggeredVideo, VideoTriggerEvents.minVideoOpen),
-                        onClose: () => this._sendTriggeredEvent(session, triggeredVideo, VideoTriggerEvents.videoSkip),
+                        onSkip: () => this._sendTriggeredEvent(session, triggeredVideo, VideoTriggerEvents.videoSkip),
                         onVideoEnd: () => this._sendTriggeredEvent(session, triggeredVideo, VideoTriggerEvents.videoViewed),
                     }
                 );
@@ -147,7 +147,7 @@ export class Pal {
                         choices: options,
                         onTapChoice: (choice) => this.triggeredEventApi?.saveSurveyAnswer(session, triggeredVideo, choice),
                         onExpand: () => this._sendTriggeredEvent(session, triggeredVideo, VideoTriggerEvents.minVideoOpen),
-                        onClose: () => this._sendTriggeredEvent(session, triggeredVideo, VideoTriggerEvents.videoSkip),
+                        onSkip: () => this._sendTriggeredEvent(session, triggeredVideo, VideoTriggerEvents.videoSkip),
                         onVideoEnd: () => this._sendTriggeredEvent(session, triggeredVideo, VideoTriggerEvents.videoViewed),
                     }
                 );

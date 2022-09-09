@@ -1,41 +1,37 @@
 @import url("https://fonts.googleapis.com/css?family=Nunito");
 
-#PalVideoMiniature .palAnimatedBg {
-    position: absolute;
+#PalVideoMiniature .palAnimatedBg,
+#PalVideoMiniature .palAnimatedBg2,
+#PalVideoMiniature .content {
+    position: fixed;
     left: 100px;
     bottom: 100px;
-    background-color: #1A1E25;
     border-radius: 50%;
-    z-index: 98;
+}
+
+#PalVideoMiniature .palAnimatedBg {
+    background-color: #1A1E25;
+    z-index: 1098;
     animation: fadeCircle 1s infinite;
     /* animation-direction: alternate; */
     animation-timing-function: ease-in;
 }
 
 #PalVideoMiniature .palAnimatedBg2 {
-    position: absolute;
-    left: 100px;
-    bottom: 100px;
     background-color: #1A1E25;
-    border-radius: 50%;
-    z-index: 97;
+    z-index: 1097;
     animation: fadeCircle2 1s infinite;
     animation-timing-function: ease-in;
 }
 
 #PalVideoMiniature .content {
-    border-radius: 50%;
     background-color: blueviolet;
-    position: absolute;
-    left: 100px;
-    bottom: 100px;
-    z-index: 99;
+    z-index: 1099;
 
     animation: fadeAndScaleIn .5s;
     animation-timing-function: linear;
     transition-duration: 300ms;
     cursor: pointer;
-
 }
 
 #PalVideoMiniature .content:hover {
@@ -64,7 +60,7 @@
     border-radius: 0 0 16px 16px;
     font-size: 16px;
     font-weight: 100;
-    z-index: 101;
+    z-index: 1101;
     font-family: 'Nunito';
     display: flex;
     justify-content: center;
@@ -81,14 +77,13 @@
 /* --------------------------------------- */
 
 #PalVideoExpanded .content {
-    z-index: 99;
     position: fixed;
     left: 32px;
     bottom: 32px;
     width: 350px;
     height: auto;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 100;
+    z-index: 1100;
     border-radius: 16px;
 
     @media screen and (max-width: 640px) {}
@@ -133,7 +128,7 @@
     position: absolute;
     top: 10px;
     right: 10px;
-    z-index: 102;
+    z-index: 1102;
 }
 
 /* --------------------------------------- */
@@ -146,7 +141,7 @@
     right: 0px;
     top: 0;
     border-radius: 16px;
-    z-index: 100;
+    z-index: 1100;
 }
 
 .pal-form-background {
@@ -157,7 +152,7 @@
     left: 0;
     right: 0;
     border-radius: 16px;
-    z-index: 101;
+    z-index: 1101;
     animation: fadeIn .2s;
     animation-timing-function: ease-in;
 }
@@ -169,7 +164,7 @@
     right: 0;
     padding-left: 30px;
     padding-right: 30px;
-    z-index: 102;
+    z-index: 1102;
 }
 
 .pal-form .question {
