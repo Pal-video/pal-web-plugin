@@ -34,16 +34,14 @@ export class PalVideoMiniature extends BaseComponent {
     }
 
     get html(): string {
-        return `<div 
-            class="content" 
-            style="width: ${this.radius}px; height: ${this.radius}px;">
+        return `<div class="content">
             <video 
                 src="${this.videoUrl}"
-                width="${this.radius}" height="${this.radius}" autoplay loop muted
+                autoplay loop muted
             ></video>
         </div>
-        <div class="palAnimatedBg" style="width: ${this.radius}px; height: ${this.radius}px;"></div>
-        <div class="palAnimatedBg2" style="width: ${this.radius}px; height: ${this.radius}px;"></div>
+        <div class="palAnimatedBg"></div>
+        <div class="palAnimatedBg2"></div>
         `;
     }
 }
