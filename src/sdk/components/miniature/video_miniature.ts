@@ -44,4 +44,13 @@ export class PalVideoMiniature extends BaseComponent {
         <div class="palAnimatedBg2"></div>
         `;
     }
+
+    static removeAny() {
+        let layout = document.getElementById(VIDEO_MINIATURE_HTML_ID);
+        if (!layout) {
+            return;
+        }
+        let body = document.getElementsByTagName("body")[0];
+        body.removeChild(layout);
+    }
 }

@@ -102,8 +102,12 @@ export class Pal {
      * depending on configuration
      * - user will see video on first time this screen as been seen
      * Or each time this screen is visited
+     * 
+     * each time we log a new screen we remove old videos from the page
      */
     async logCurrentScreen(name: string) {
+        this.palSdk.clear();
+
         const session = await this.getSession();
         if (!session) {
             throw new Error('Pal has not been initialized');

@@ -143,5 +143,14 @@ export class PalSdk {
         videoMiniature.appendToDom();
     }
 
+    /**
+     * If any video are found on the current page we delete it
+     * 
+     */
+    public clear() {
+        PalVideoMiniature.removeAny();
+        PalVideoExpanded.removeAny();
+    }
+
 
 }
