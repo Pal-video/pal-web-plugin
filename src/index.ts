@@ -20,7 +20,11 @@ export class Pal {
 
     private options!: PalOptions;
 
+    // Pal needs to initialize session first
     private hasInitialized = false;
+
+    // We keep the last visited screen in memory so we don't chain two same request
+    private lastVisitedScreen?: string;
 
     private static _instance: Pal | null;
 
@@ -96,16 +100,36 @@ export class Pal {
         this.sessionsApi.clearSession();
     }
 
+
     /**
+     * Calls logCurrentScreen using the url from your window
+     */
+    async logCurrentScreenAuto() {
+        var url = new URL(window.location.href);
+        let origin = url.origin;
+        let path = url.pathname;
+        let params = url.searchParams;
+
+        return this.logCurrentScreen(path);
+    }
+
+    /**
+     * Prefer using logCurrentScreenAuto
+     * 
      * send the screen view event to the server
      * if a video is triggered, it will be returned
      * depending on configuration
      * - user will see video on first time this screen as been seen
      * Or each time this screen is visited
      * 
-     * each time we log a new screen we remove old videos from the page
+     * - each time we log a new screen we remove old videos from the page
+     * - if the last visited screen name is the same we ommit this request
      */
     async logCurrentScreen(name: string) {
+        if (this.lastVisitedScreen && this.lastVisitedScreen == name) {
+            return;
+        }
+        this.lastVisitedScreen = name;
         this.palSdk.clear();
 
         const session = await this.getSession();
