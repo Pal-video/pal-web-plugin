@@ -1,6 +1,6 @@
 {
     "name": "pal.video",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "description": "Your in-app friend.",
     "main": "build/src/pal.js",
     "cdn": "build/pal.min.js",
@@ -30,7 +30,8 @@
         "pretest": "npm run compile",
         "posttest": "npm run lint",
         "test": "jest",
-        "test-watch": "jest --watchAll"
+        "test-watch": "jest --watchAll",
+        "publish": "compile-ts && npm run compile && npm run publish"
     },
     "dependencies": {},
     "devDependencies": {
