@@ -35,10 +35,9 @@ export class PalVideoMiniature extends BaseComponent {
 
     get html(): string {
         return `<div class="content">
-            <video 
-                src="${this.videoUrl}"
-                autoplay loop muted
-            ></video>
+            <video autoplay loop muted>
+                <source src="${this.videoUrl}" type="video/mp4">
+            </video>
         </div>
         <div class="palAnimatedBg"></div>
         <div class="palAnimatedBg2"></div>
