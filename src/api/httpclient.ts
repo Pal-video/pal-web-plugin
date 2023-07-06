@@ -71,6 +71,7 @@ export class HttpClient {
     }
 
     private async handleError(method: string, response: Response) {
+        await this.handleApiError(method, response);
         if (response && (response.status < 200 || response.status >= 300)) {
             throw new Error(`Pal http call failed 
                 -----------------------------------
@@ -81,5 +82,38 @@ export class HttpClient {
                 -----------------------------------
             `.replace(/  +/g, ''));
         }
+    }
+
+    private async handleApiError(method: string, response: Response) {
+        if (response && (response.status < 200 || response.status >= 300)) {
+            const errorText = await response.text();
+            let error = undefined;
+            try {
+                error = JSON.parse(errorText);
+            } catch(err) {}
+            if(error && error.code && error.description) {
+                throw new ApiRequestError(
+                    `${this.baseUrl}${method}`, 
+                    error.code, 
+                    response.status,
+                    error.description
+                );
+            }
+            
+        }
+    }
+}
+
+
+export class ApiRequestError extends Error {
+
+    constructor (
+        public url: string, 
+        public code: string, 
+        public status: number,
+        public description: string
+    ) {
+        super(description);    
+        this.name = code;
     }
 }

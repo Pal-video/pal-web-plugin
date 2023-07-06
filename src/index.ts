@@ -1,5 +1,5 @@
 import { PalEventApi } from './api/event.api';
-import { HttpClient } from './api/httpclient';
+import { ApiRequestError, HttpClient } from './api/httpclient';
 import { LocalstorageService } from './api/localstorage';
 import {
     PalSession,
@@ -180,7 +180,21 @@ export class Pal {
                     }
                 );
             }
-        } catch (err) {
+        } catch (err: any) { 
+            // Ugly but needed to catch ApiRequestError as Rollup doesn't work with instanceof
+            // This is not working
+            // if (err instanceof ApiRequestError && err.code === "SESSION_NOT_FOUND") 
+            if (err.code === "SESSION_NOT_FOUND") {
+                console.error("🚩", err.code);
+                console.error("reseting session...");
+                this.clearSession();
+                await this.sessionsApi.createSession(<PalSessionRequest>{
+                    frameworkType: 'JAVASCRIPT',
+                    platform: this.options.platform ?? PlatformTypes.web,
+                });
+                this.logCurrentScreen(name);
+                return;
+            }
             console.error("logCurrentScreen");
             console.error(err);
         }
