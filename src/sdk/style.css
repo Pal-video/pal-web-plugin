@@ -77,6 +77,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @media screen and (max-width: 640px) {
+        border-radius: 0;
+    }
 }
 
 .pal-brand img {
@@ -90,25 +94,43 @@
 
 #PalVideoExpanded .content {
     position: fixed;
-    left: 32px;
-    bottom: 32px;
-    width: 350px;
-    height: auto;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1100;
-    border-radius: 16px;
 
-    @media screen and (max-width: 640px) {}
 
-    @media screen and (min-width: 641px) and (max-width: 1200px) {}
+    @media screen and (max-width: 640px) {
+        left: 0;
+        bottom: 0;
+        top: 0;
+        right: 0;
+        border-radius: 0;
+    }
 
-    @media screen and (min-width: 1201px) {}
+    @media screen and (min-width: 641px) and (max-width: 1200px) {
+        left: 32px;
+        bottom: 32px;
+        width: 350px;
+        height: auto;
+        border-radius: 16px;
+    }
+
+    @media screen and (min-width: 1201px) {
+        left: 32px;
+        bottom: 32px;
+        width: 350px;
+        height: auto;
+        border-radius: 16px;
+    }
 }
 
 #PalVideoExpanded video {
     width: 100%;
     object-fit: contain;
     border-radius: 16px;
+
+    @media screen and (max-width: 640px) {
+        border-radius: 0;
+    }
 }
 
 #PalVideoExpanded .author {
